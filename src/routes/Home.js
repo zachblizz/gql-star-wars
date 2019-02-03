@@ -1,26 +1,10 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Person from '../pres/Person';
 
-const allNamesQuery = gql`
-{
-  allPeople {
-    people {
-      name,
-      gender,
-      birthYear,
-      height,
-      homeworld {
-        name
-      },
-      species {
-        name
-      }
-    }
-  }
-}`;
+import { queries } from '../graphQL';
+import { GET_PEOPLE } from '../redux/reducers/data';
 
 const Home = ({data: {allPeople}}) => (
   <>
@@ -33,4 +17,6 @@ const Home = ({data: {allPeople}}) => (
   </>
 );
 
-export default graphql(allNamesQuery)(Home);
+export default graphql(
+  queries[GET_PEOPLE]
+)(Home);

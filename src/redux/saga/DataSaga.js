@@ -3,29 +3,8 @@ import {
   takeLatest, 
   all 
 } from "redux-saga/effects";
-import { client } from '../../graphQL';
-import { receivePeople } from "../reducers/data";
-import gql from 'graphql-tag';
-
-const queries = {
-  "GET_PEOPLE": gql`
-  {
-    allPeople {
-      people {
-        name,
-        gender,
-        birthYear,
-        height,
-        homeworld {
-          name
-        },
-        species {
-          name
-        }
-      }
-    }
-  }`
-}
+import { client, queries } from '../../graphQL';
+import { receivePeople, GET_PEOPLE } from "../reducers/data";
 
 export function* getData({type}) {
   try {
@@ -33,8 +12,9 @@ export function* getData({type}) {
       query: queries[type]
     });
     
-    if (resp.data.allPeople)
+    if (resp.data.allPeople) {
       yield put(receivePeople(resp.data.allPeople.people));
+    }
   } catch (e) {
     console.log(e);
   }
@@ -42,6 +22,6 @@ export function* getData({type}) {
 
 export default function* mySaga() {
   yield all([
-    takeLatest("GET_PEOPLE", getData)
+    takeLatest(GET_PEOPLE, getData)
   ])
 }

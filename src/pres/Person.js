@@ -5,11 +5,15 @@ const Person = ({p}) => (
     style={{
       width: "20%",
       height: "20%",
-      boxShadow: "0px 10px 10px -10px #333",
-      margin: 10
+      boxShadow: "0px 10px 10px -10px #ddd",
+      margin: 10,
+      border: "1px solid #eee",
+      padding: 10,
+      fontFamily: "arial"
     }}
   >
-    {p.name}
+    <h3>{p.name}</h3>
+    Films: {p.filmConnection.films.length}
   </div>
 )
 
